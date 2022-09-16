@@ -15,14 +15,5 @@ public class HotelReservation {
         hotelDataList.add(hotel2);
         hotelDataList.add(hotel3);
         hotelDataList.forEach(System.out::println);
-        System.out.println( );
-
-        HotelReservationSystem hotelReservationSystem = new HotelReservationSystem();
-        hotelReservationSystem.getDate();
-        hotelReservationSystem.countDays();
-        hotelReservationSystem.findingHotelCost(hotel1);
-        hotelReservationSystem.findingHotelCost(hotel2);
-        hotelReservationSystem.findingHotelCost(hotel3);
-        hotelReservationSystem.comparingHotelAmount(hotel1, hotel2, hotel3);
     }
 }

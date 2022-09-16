@@ -1,8 +1,5 @@
 package com.bridgelabz;
 
-
-import java.time.LocalDate;
-
     public class Hotel {
         private String hotelName;
         private double weekdayRegularCustomerCost;
@@ -68,10 +65,6 @@ import java.time.LocalDate;
 
         public void setWeekendRewardsCustomerCost(double weekendRewardsCustomerCost) {
             this.weekendRewardsCustomerCost = weekendRewardsCustomerCost;
-        }
-
-        public void getCheapestHotel(LocalDate startDate, LocalDate endDate) {
-
         }
 
         @Override
