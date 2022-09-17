@@ -1,76 +1,37 @@
 package com.bridgelabz;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 public class HotelReservationSystem {
-    private LocalDate fromDate;
-    private LocalDate toDate;
-    private long noOfDays;
+    static List<Hotel> hotelDataList = new ArrayList<>();
+    public static void findCheapestHotelWeekdays(String bookingFromDate, String leavingDate) {
+        LocalDate checkInDate = LocalDate.parse(bookingFromDate, DateTimeFormatter.ofPattern("dd-MMM-yyyy"));
+        LocalDate checkOutDate = LocalDate.parse(leavingDate, DateTimeFormatter.ofPattern("dd-MMM-yyyy"));
+        int stayingDays = checkOutDate.getDayOfMonth() - checkInDate.getDayOfMonth() + 1;
+        Optional<Hotel> cheapestHotel = hotelDataList.stream().min(Comparator.comparing(Hotel::getWeekdayRates));
 
-    public long getNoOfDays() {
-        return noOfDays;
+        Hotel hotelData = new Hotel();
+        hotelData.setHotelName(cheapestHotel.get().hotelName);
+        hotelData.setTotalPrice(cheapestHotel.get().getWeekdayRates() * stayingDays);
+        System.out.println("Hotel Name " + hotelData.getHotelName());
+        System.out.println("Total price in weekdays : " + stayingDays + hotelData.getTotalPrice());
     }
 
-    public void setNoOfDays(long noOfDays) {
-        this.noOfDays = noOfDays;
-    }
+    public static void findCheapestHotelWeekend(String bookingFromDate, String leavingDate) {
+        LocalDate checkInDate = LocalDate.parse(bookingFromDate, DateTimeFormatter.ISO_DATE);
+        LocalDate checkOutDate = LocalDate.parse(leavingDate, DateTimeFormatter.ISO_DATE);
+        int stayingDays = checkOutDate.getDayOfMonth() - checkInDate.getDayOfMonth() + 1;
+        Optional<Hotel> cheapestHotel = hotelDataList.stream().min(Comparator.comparing(Hotel::getWeekdayRates));
 
-    public LocalDate getFromDate() {
-        return fromDate;
-    }
-
-    public void setFromDate(LocalDate fromDate) {
-        this.fromDate = fromDate;
-    }
-
-    public LocalDate getToDate() {
-        return toDate;
-    }
-
-    public void setToDate(LocalDate toDate) {
-        this.toDate = toDate;
-    }
-
-    public void getDate() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the In Date to reserve the hotel YYYY-MM-DD");
-        fromDate = LocalDate.parse(scanner.next());
-        System.out.println("Enter the To Date to reserve the hotel YYYY-MM-DD");
-        toDate = LocalDate.parse(scanner.next());
-    }
-
-    public void findingHotelCost(Hotel hotel) {
-        // This will give no of days between from date and to date
-        try {
-            hotel.setHotelCost((noOfDays * hotel.getWeekdayRegularCustomerCost()));
-            System.out.println(hotel.getHotelCost());
-        } catch (Exception e) {
-            System.out.println("Enter the Date in proper format: " + e);
-        }
-    }
-
-    public void countDays() {
-        noOfDays = ChronoUnit.DAYS.between(fromDate, toDate);
-        System.out.println("No of Days Staying at hotel: " + noOfDays);
-    }
-
-    public void comparingHotelAmount(Hotel hotel1, Hotel hotel2, Hotel hotel3) {
-        if (hotel1.getHotelCost() < hotel2.getHotelCost() && hotel1.getHotelCost() < hotel3.getHotelCost()) {
-            System.out.println("The Cheapest hotel is " + hotel1.getHotelName() + "It costs " + hotel1.getHotelCost());
-        } else if (hotel2.getHotelCost() < hotel3.getHotelCost()) {
-            System.out.println("The Cheapest hotel is " + hotel2.getHotelName() + "It costs " + hotel2.getHotelCost());
-        } else
-            System.out.println("The Cheapest hotel is " + hotel3.getHotelName() + "It costs " + hotel3.getHotelCost());
-    }
-
-    @Override
-    public String toString() {
-        return "HotelReservationSystem{" +
-                "fromDate=" + fromDate +
-                ", toDate=" + toDate +
-                ", noOfDays=" + noOfDays +
-                '}';
+        Hotel hotelData = new Hotel();
+        hotelData.setHotelName(cheapestHotel.get().hotelName);
+        hotelData.setTotalPrice(cheapestHotel.get().getWeekendRates() * stayingDays);
+        System.out.println("Hotel Name " + hotelData.getHotelName());
+        System.out.println("Total price in weekends : " + stayingDays + hotelData.getTotalPrice());
     }
 }
