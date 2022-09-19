@@ -1,24 +1,56 @@
 package com.bridgelabz;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class HotelReservation {
-    static List<Hotel> hotelDataList = new ArrayList<>();
+    static List<HotelData> hotelDataList = new ArrayList<>();
+
     public static void main(String[] args) {
-        System.out.println("Welcome to Hotel Reservation Program");
-        Hotel hotel1 = new Hotel("LakeWood",200, 100);
-        Hotel hotel2 = new Hotel("RiverWood", 120, 90);
-        Hotel hotel3 = new Hotel("BridgeWood", 150, 120);
-        hotelDataList.add(hotel1);
-        hotelDataList.add(hotel2);
-        hotelDataList.add(hotel3);
-        hotelDataList.forEach(System.out::println);
+        System.out.println("welcome to Hotel Reservation");
 
 
-        HotelReservationSystem hrs = new HotelReservationSystem();
-        hrs.findCheapestHotelWeekdays("06-Dec-2021", "09-Dec-2021");
-        hrs.findCheapestHotelWeekend("11-Jan-2022", "14-Jan-2022");
+        HotelData lakeWood = new HotelData("lakeWood", 110, 90, 3);
+        HotelData bridgeWood = new HotelData("BridgeWood", 150, 50, 5);
+        HotelData ridgeWood = new HotelData("RidgeWood", 220, 150, 4);
+        hotelDataList.add(lakeWood);
+        hotelDataList.add(bridgeWood);
+        hotelDataList.add(ridgeWood);
+
+        hotelDataList.forEach(output -> System.out.println(output));
+
+        findCheapestHotelWeekdays("10-Sep-2020", "11-Sep-2020");
+        findCheapestHotelWeekend("11-Sep-2020", "12-Sep-2020");
 
 
+    }
+
+    public static void findCheapestHotelWeekdays(String bookingFromDate, String leavingDate) {
+        LocalDate checkInDate = LocalDate.parse(bookingFromDate, DateTimeFormatter.ofPattern("dd-MMM-yyyy"));
+        LocalDate checkOutDate = LocalDate.parse(leavingDate, DateTimeFormatter.ofPattern("dd-MMM-yyyy"));
+        int stayingDays = checkOutDate.getDayOfMonth() - checkInDate.getDayOfMonth() + 1;
+        Optional<HotelData> cheapestHotel = hotelDataList.stream().sorted(Comparator.comparing(HotelData::getWeekdayRates))
+                .findFirst();
+
+        HotelData hotelData = new HotelData();
+        hotelData.setHotelName(cheapestHotel.get().getHotelName());
+        hotelData.setTotalPrice(cheapestHotel.get().getWeekdayRates() * stayingDays);
+        System.out.println("Hotel Name " + hotelData.getHotelName());
+        System.out.println("Total price in weekdays : " + stayingDays + hotelData.getTotalPrice());
+    }
+
+    public static void findCheapestHotelWeekend(String bookingFromDate, String leavingDate) {
+        LocalDate checkInDate = LocalDate.parse(bookingFromDate, DateTimeFormatter.ofPattern("dd-MMM-yyyy"));
+        LocalDate checkOutDate = LocalDate.parse(leavingDate, DateTimeFormatter.ofPattern("dd-MMM-yyyy"));
+        int stayingDays = checkOutDate.getDayOfMonth() - checkInDate.getDayOfMonth() + 1;
+        Optional<HotelData> cheapestHotel = hotelDataList.stream().sorted(Comparator.comparing(HotelData::getWeekdayRates))
+                .findFirst();
+
+        HotelData hotelData = new HotelData();
+        hotelData.setHotelName(cheapestHotel.get().getHotelName());
+        hotelData.setTotalPrice(cheapestHotel.get().getWeekendRates() * stayingDays);
+        System.out.println("Hotel Name " + hotelData.getHotelName());
+        System.out.println("Total price in weekends : " + stayingDays + hotelData.getTotalPrice());
     }
 }
