@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="200d13be-485c-46f1-a100-d9466a5a69e6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bridgelabz/Hotel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bridgelabz/HotelData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bridgelabz/HotelReservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bridgelabz/HotelReservation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bridgelabz/HotelReservationSystem.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -6,11 +6,8 @@ import java.util.*;
 
 public class HotelReservation {
     static List<HotelData> hotelDataList = new ArrayList<>();
-
     public static void main(String[] args) {
         System.out.println("welcome to Hotel Reservation");
-
-
         HotelData lakeWood = new HotelData("lakeWood", 110, 90, 3);
         HotelData bridgeWood = new HotelData("BridgeWood", 150, 50, 5);
         HotelData ridgeWood = new HotelData("RidgeWood", 220, 150, 4);
@@ -20,8 +17,9 @@ public class HotelReservation {
 
         hotelDataList.forEach(output -> System.out.println(output));
 
-        findCheapestHotelWeekdays("10-Sep-2020", "11-Sep-2020");
-        findCheapestHotelWeekend("11-Sep-2020", "12-Sep-2020");
+        findCheapestHotelWeekdays("23-May-2022", "27-May-2022");
+        findCheapestHotelWeekend("28-May-2022", "29-May-2022");
+        findCheapestBestRatedHotel("28-May-2022", "29-May-2022");
 
 
     }
@@ -52,5 +50,20 @@ public class HotelReservation {
         hotelData.setTotalPrice(cheapestHotel.get().getWeekendRates() * stayingDays);
         System.out.println("Hotel Name " + hotelData.getHotelName());
         System.out.println("Total price in weekends : " + stayingDays + hotelData.getTotalPrice());
+    }
+
+    public static void findCheapestBestRatedHotel(String bookingFromDate, String leavingDate) {
+        LocalDate checkInDate = LocalDate.parse(bookingFromDate, DateTimeFormatter.ofPattern("dd-MMM-yyyy"));
+        LocalDate checkOutDate = LocalDate.parse(leavingDate, DateTimeFormatter.ofPattern("dd-MMM-yyyy"));
+        int stayingDays = checkOutDate.getDayOfMonth() - checkInDate.getDayOfMonth() + 1;
+        HotelData cheapBestHotel = hotelDataList.stream().filter(n -> n.hotelRating >3)
+                .min(Comparator.comparing(HotelData::getHotelRating))
+                .orElse(null);
+
+        HotelData hotelData = new HotelData();
+        hotelData.setHotelName(cheapBestHotel.getHotelName());
+        hotelData.setTotalPrice(cheapBestHotel.getWeekendRates() * stayingDays);
+        System.out.println("Cheap best Hotel is : " + hotelData.getHotelName());
+        System.out.println("Total price is : " + stayingDays + hotelData.getTotalPrice());
     }
 }
